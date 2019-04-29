@@ -23,20 +23,12 @@ export class FsModelChangeDirective implements ControlValueAccessor, OnInit, OnD
   @Input() changeDelay = 300;
   @Input() changeOnBlur = false;
 
-  registerOnChange(fn: (value: any) => any): void {
-    this._onChange = fn
-  }
-
-  registerOnTouched(fn: () => any): void {
-    this._onTouched = fn
-  }
-
   constructor(
     private _elementRef: ElementRef,
     private _renderer: Renderer2,
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
 
     if (this.changeOnBlur) {
       this.subject
@@ -48,15 +40,9 @@ export class FsModelChangeDirective implements ControlValueAccessor, OnInit, OnD
         this.blurChange = true;
       });
 
-      this._elementRef.nativeElement.addEventListener('blur', (e) => {
-        if (this.blurChange) {
-          this._onChange(e.target.value);
-        }
-      });
+      this._elementRef.nativeElement.addEventListener('blur', this.blur);
 
-      this._elementRef.nativeElement.addEventListener('focus', (e) => {
-        this.blurChange = false;
-      });
+      this._elementRef.nativeElement.addEventListener('focus', this.focus);
 
     } else {
       this.subject
@@ -70,17 +56,43 @@ export class FsModelChangeDirective implements ControlValueAccessor, OnInit, OnD
       });
     }
 
-    this._elementRef.nativeElement.addEventListener('input', (e) => {
-      this.subject.next(e.target.value);
-    });
+    this._elementRef.nativeElement.addEventListener('input', this.input);
   }
 
-  writeValue(value: string) {
+  registerOnChange(fn: (value: any) => any): void {
+    this._onChange = fn
+  }
+
+  registerOnTouched(fn: () => any): void {
+    this._onTouched = fn
+  }
+
+  public writeValue(value: string) {
     this._renderer.setProperty(this._elementRef.nativeElement, 'value', value);
   }
 
   public ngOnDestroy() {
+
+    this._elementRef.nativeElement.removeEventListener('input', this.input);
+    this._elementRef.nativeElement.removeEventListener('blur', this.blur);
+    this._elementRef.nativeElement.removeEventListener('focus', this.focus);
+
     this._destroy$.next();
     this._destroy$.complete();
   }
+
+  private blur = (e) => {
+    if (this.blurChange) {
+      this._onChange(e.target.value);
+    }
+  }
+
+  private focus = (e) => {
+    this.blurChange = false;
+  }
+
+  private input = (e) => {
+    this.subject.next(e.target.value);
+  }
+
 }
