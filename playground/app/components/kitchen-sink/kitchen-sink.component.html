@@ -1,1 +1,11 @@
-<fs-component></fs-component>
+
+<mat-form-field>
+  <input matInput placeholder="Delay Change" type="text" [(ngModel)]="delay" (ngModelChange)="delayChange()" fsModelChange>
+</mat-form-field>
+
+<br><br>
+
+<mat-form-field>
+  <input matInput placeholder="Blur Change" type="text" [(ngModel)]="blur" (ngModelChange)="blurChange()" fsModelChange [changeOnBlur]="true">
+</mat-form-field>
+

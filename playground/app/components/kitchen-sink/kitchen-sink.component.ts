@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfigureComponent } from '../configure';
 import { FsExampleComponent } from '@firestitch/example';
+import { FsMessage } from '@firestitch/message';
 
 @Component({
   selector: 'kitchen-sink',
@@ -9,9 +10,16 @@ import { FsExampleComponent } from '@firestitch/example';
 })
 export class KitchenSinkComponent {
 
-  public config = {};
+  public blur = '';
+  public delay = '';
 
-  constructor(private exampleComponent: FsExampleComponent) {
-    //exampleComponent.setConfigureComponent(ConfigureComponent, { config: this.config });
+  constructor(private message: FsMessage) {}
+
+  delayChange() {
+    this.message.success('Delay Change');
+  }
+
+  blurChange() {
+    this.message.success('Blur Change');
   }
 }

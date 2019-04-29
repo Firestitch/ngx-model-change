@@ -1,29 +1,24 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FsModelChangeDirective } from './directives/model-change.directive';
 
-import { FsComponentComponent } from './components/component';
-// import { FsComponentService } from './services';
+
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   exports: [
-    FsComponentComponent,
-  ],
-  entryComponents: [
+    FsModelChangeDirective,
   ],
   declarations: [
-    FsComponentComponent,
-  ],
-  providers: [
-    // FsComponentService,
+    FsModelChangeDirective,
   ],
 })
-export class FsComponentModule {
+export class FsModelChangeModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsComponentModule,
+      ngModule: FsModelChangeModule,
       // providers: [FsComponentService]
     };
   }

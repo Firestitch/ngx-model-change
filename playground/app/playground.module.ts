@@ -9,7 +9,7 @@ import { FsMessageModule } from '@firestitch/message';
 
 import { ToastrModule } from 'ngx-toastr';
 
-import { FsComponentModule } from '@firestitch/package';
+import { FsModelChangeModule } from '@firestitch/package';
 
 import { AppMaterialModule } from './material.module';
 import {
@@ -27,7 +27,7 @@ const routes: Routes = [
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsComponentModule,
+    FsModelChangeModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
